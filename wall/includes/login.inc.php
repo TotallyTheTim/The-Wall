@@ -58,7 +58,3 @@ if(isset($_POST['submit'])) {
         exit();
     }
 
-    setcookie('u_uid' time()+ 3600 * 24 * 7);
-    setcookie('user_pwd' time()+ 3600 * 24 * 7);
-    header('Location:../public/home.php');
-

@@ -22,7 +22,7 @@ if (!$uid_value) {
     <a href="test.php">Friends</a>
     <a href="upload.php">Upload</a>
     <a href="../includes/logout.inc.php">Logout</a>
-    <a href="profile.php" id="fag" style="color:white;"><?php echo $uid_value;?></a>
+    <a href="profile.php" class="fag" style="color:white;float: right;"><?php echo $uid_value;?></a>
     <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
     <script src="script.js" charset="utf-8"></script>
     </div>

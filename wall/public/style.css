@@ -3,10 +3,11 @@
 body {
   margin: 0;
   /* background-color: #ab987a; */
-  background-image: url('faded.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+  /*background-image: url('faded.png');*/
+  /*background-position: center;*/
+  /*background-repeat: no-repeat;*/
+  /*background-size: cover;*/
+    background-color: #822626;
   font-family: 'Ubuntu', sans-serif;
 }
 .h1{
@@ -15,10 +16,6 @@ body {
 }
 
 #username{
-  color: darkred;
-}
-#fag{
-  float: right;
   color: darkred;
 }
 
@@ -55,13 +52,13 @@ background: rgba(255,255,255,0.8);
 
 .topnav {
   overflow: hidden;
-  background-color: #0f1628;;
+  background-color:#262525;;
 }
 
 .topnav a {
   float: left;
   display: block;
-  color: #ff533d;
+  color: #708090;
   font-weight: 600;
   text-align: center;
   padding: 14px 16px;
@@ -70,7 +67,7 @@ background: rgba(255,255,255,0.8);
 }
 
 .topnav a:hover {
-  background:rgba(255,255,255,0.8);
+  background:rgba(255,255,255,0.6);
 
 
 }
@@ -139,12 +136,22 @@ background: rgba(255,255,255,0.8);
     display: block;
     text-align: left;
   }
+    .settings{
+        width:100%;
+    }
+    .fag{
+        float: none;
+
+    }
+
+
+
+
 }
 /* login */
 .container{
 
   width: 40%;
-  margin-top: 100px;
   margin: 0 auto;
   background-color: rgba(255,255,255,0.8);
   border-radius:10px;
@@ -190,14 +197,14 @@ img.avatar {
     width: 15%;
     height: auto;
     border-radius: 50%;
-    box-shadow: 10px 10px 30px gray;
+    box-shadow: 10px 10px 30px black;
 }
 
 
 
 
 /* Change styles for span and cancel button on extra small screens */
-@media screen and (max-width: 340px) {
+    @media screen and (max-width: 340px) {
 
     .cancelbtn {
        width: 100%;
@@ -214,9 +221,8 @@ img.avatar {
     .signup-wrapper{
     margin-top: 50px;
     }
-    #fag{
-      float: left;
-    }
+
+
 
 
 }
@@ -231,28 +237,5 @@ img.avatar {
     }
 
 }
-.changeusername{
-    widows:20%;
-}
-
-/*image upload*/
-.upload-btn-wrapper {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-    margin-left: 45%;
-
-}
-
-.btn {
-    border: 2px solid gray;
-    color: gray;
-    background-color: white;
-    padding: 8px 20px;
-    border-radius: 8px;
-    font-size: 20px;
-    font-weight: bold;
-}
-
 
 

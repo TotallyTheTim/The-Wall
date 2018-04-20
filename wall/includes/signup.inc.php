@@ -52,7 +52,7 @@ if (isset($_POST['submit'])){
           $sql = "INSERT INTO users VALUES (0,'$first', '$last', '$email',
              '$uid', '$hashedPwd');";
           $result = mysqli_query($conn, $sql);
-          header("Location: ../index.html?signup=succes");
+          header("Location: ../public/index.php?signup=succes");
           exit();
         }
       }
@@ -60,6 +60,6 @@ if (isset($_POST['submit'])){
   }
 
 } else{
-  header("Location: ../signup.html");
+  header("Location: ../public/signup.php");
   exit();
 }

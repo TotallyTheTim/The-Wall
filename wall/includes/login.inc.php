@@ -8,6 +8,12 @@ if(isset($_POST['submit'])) {
     $uid = $_POST['uid'];
     $pwd = $_POST['pwd'];
 
+
+    $_SESSION['username'] = $uid;
+    
+
+
+
     //Error handlers
 
     //check of de inputs leeg zijn
@@ -17,7 +23,7 @@ if(isset($_POST['submit'])) {
         echo 'error empty';
         exit();
     } else {
-        $sql = "SELECT * FROM users WHERE user_uid='$uid'";
+        $sql = "SELECT * FROM users WHERE user_uid='$uid' OR user_email='$uid'";
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result);
         if($resultCheck < 1){
@@ -34,12 +40,13 @@ if(isset($_POST['submit'])) {
                     exit();
                 }elseif ($hashedPwdCheck == true){
                     //User gaat naar website
-                    $_SESSION['u_id'] = $row ['user_id'];
+                    $_SESSION['u_id'] = $row ['id'];
                     $_SESSION['u_first'] = $row ['user_first'];
                     $_SESSION['u_last'] = $row ['user_last'];
                     $_SESSION['u_email'] = $row ['user_email'];
                     $_SESSION['u_uid'] = $row ['user_uid'];
-                    header("Location: ../home.php");
+                    header("Location: ../public/home.php");
+
                     exit();
                 }
             }
@@ -47,6 +54,11 @@ if(isset($_POST['submit'])) {
     }
 }
     else{
-        header("Location: ../index.html?login=error");
+        header("Location: ../public/index.php?login=error");
         exit();
     }
+
+    setcookie('u_uid' time()+ 3600 * 24 * 7);
+    setcookie('user_pwd' time()+ 3600 * 24 * 7);
+    header('Location:../public/home.php');
+

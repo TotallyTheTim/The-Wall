@@ -4,7 +4,7 @@
 $dbServername ="localhost";
 $dbUsername = "root";
 $dbPassword = "";
-$dbName = "loginsystem";
+$dbName = "thewall_login";
 
 // connection
 $conn = mysqli_connect($dbServername,$dbUsername,$dbPassword,$dbName);

@@ -9,9 +9,9 @@ include 'header.php';
 
 </div>
 <div class="settings">
-  <a href="#" id="delete">delete account</a>
-  <a href="changeusername.php" id="usernam">change username</a>
-  <a href="#"id="password">change password</a>
+  <a href="#" id="delete" style="background-color: #E6DDBC;">delete account</a>
+  <a href="changeusername.php" id="usernam" style="background-color: #E6DDBC;">change username</a>
+  <a href="#"id="password" style="background-color: #E6DDBC;">change password</a>
 </div>
 
 

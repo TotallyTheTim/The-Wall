@@ -10,7 +10,7 @@ if(isset($_POST['submit'])) {
 
 
     $_SESSION['username'] = $uid;
-    
+
 
 
 
@@ -26,6 +26,7 @@ if(isset($_POST['submit'])) {
         $sql = "SELECT * FROM users WHERE user_uid='$uid' OR user_email='$uid'";
         $result = mysqli_query($conn,$sql);
         $resultCheck = mysqli_num_rows($result);
+        print_r($resultCheck);
         if($resultCheck < 1){
 
             echo 'you are not registed';

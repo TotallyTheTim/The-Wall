@@ -1,4 +1,8 @@
 <?php
+$selected_user = $_GET['profile'];
+//echo $selected_user;
+
+
 
 session_start();
 $username = $_SESSION['u_uid'];
@@ -342,26 +346,28 @@ $result = mysqli_query($db, "SELECT * FROM images");
 
 
 <div class="h1">
-    <h1>Welcome to the wall, <a class="username"><?php echo $_SESSION['u_first'];?></a></h1>
+    <h1>Uploaded pictures by:<a class="username"><?php echo $selected_user;?></a></h1>
 </div>
 
 
 <div id="main_upload">
-<div class="masonry">
-    <?php
+    <div class="masonry">
+        <?php
 
-    while ($row = mysqli_fetch_array($result)) {
-        echo "<div id='img_div'>";
-        echo "<img id='myImg' alt='". "<h3>" .$row['by_who'] . "</h3> Title: <h3> ".$row['image_text']. "</h3>" ."' onclick='myFunc(this)' src='images/".$row['image']."' >";
-        echo "<p>".$row['image_text']."</p>";
-        echo "</div>";
+        while ($row = mysqli_fetch_array($result)) {
+            if ($row['by_who']==$selected_user){
 
-        echo '<div id="myModal" class="modal">
+            echo "<div id='img_div'>";
+            echo "<img id='myImg' alt='". "<h3>" .$row['by_who'] . "</h3> Title: <h3> ".$row['image_text']. "</h3>" ."' onclick='myFunc(this)' src='images/".$row['image']."' >";
+            echo "<p>".$row['image_text']."</p>";
+            echo "</div>";
+
+            echo '<div id="myModal" class="modal">
                 <span class="close"  onclick="modal.style.display = \'none\'" >&times;</span>
                 <img class="modal-content" id="img" style="margin-bottom: 0;margin-top: 0px" images/'.$row['image'].'">
-                <div id="caption"></div>
+                <div id="caption">Error getting information.</div>
                 </div>';
-        echo '
+            echo '
         <script>
             var modal = document.getElementById("myModal");
 
@@ -379,14 +385,15 @@ $result = mysqli_query($db, "SELECT * FROM images");
              modal.onclick = function() { 
                 modal.style.display = "none";
              }
+             
         
         </script>
         ';
 
-    }
-    ?>
+        }}
+        ?>
 
-</div>
+    </div>
 
 
 

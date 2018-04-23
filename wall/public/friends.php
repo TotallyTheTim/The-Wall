@@ -7,104 +7,67 @@ if (!$uid_value) {
     header("Location: index.php");
     exit;
 }
-
-
-
-
-
-// Create database connection
-$db = mysqli_connect("localhost", "root", "", "thewall");
-
-// Initialize message variable
-$msg = "";
-
-// If upload button is clicked ...
-if (isset($_POST['upload'])) {
-    // Get image name
-    $image = $_FILES['image']['name'];
-    // Get text
-    $image_text = mysqli_real_escape_string($db, $_POST['image_text']);
-    $by = mysqli_real_escape_string($db, $_POST['madeby']);
-//    $by = $_POST['madeby'];
-
-    // image file directory
-    $target = "images/".basename($image);
-
-    $sql = "INSERT INTO images (image, image_text,by_who) VALUES ('$image', '$image_text', '$by')";
-    // execute query
-    mysqli_query($db, $sql);
-
-    if (move_uploaded_file($_FILES['image']['tmp_name'], $target)) {
-        $msg = "Image uploaded successfully";
-    }else{
-        $msg = "Failed to upload image";
-    }
-}
-$result = mysqli_query($db, "SELECT * FROM images");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>The Wall Upload</title>
+    <script>
+        function showHint(str) {
+            if (str.length == 0) {
+                document.getElementById("txtHint").innerHTML = "";
+                return;
+            } else {
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        document.getElementById("txtHint").innerHTML = this.responseText;
+                    }
+                };
+                xmlhttp.open("GET", "../includes/ajax.php?q=" + str, true);
+                xmlhttp.send();
+            }
+        }
+    </script>
+    <title>The Wall Friends!</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
     <style>
-        h1{
-            transition: font-size 1s, opacity 0.3s;
-            transition-delay: 0.02s;
-            z-index: -9999;
-        }
         #main_upload{
-            z-index: 0;
-            position: absolute;
-            top:175px;
+            position: fixed;
+            top:75px;
             left: 10%;
             width:80%;
-            min-height:15em;
+            min-height:10em;
+            height: 100%;
             margin: 0 auto;
             transition: 1.0s;
+            z-index: -2;
             transition-delay: 0.02s;
         }
+        @media screen and (max-width: 900px) {
+            #main_upload{
+                width: 95%;
+                left: 2.5%;
+                top: 66px;
+            }
+        }
+        @media screen and (max-width: 600px) {
+            #main_upload{
+                width: 100%;
+                left: 0;
+                top: 51px;
 
-
-
-
-
-
-        img{
-            float: left;
-            /*border: 5px solid black;*/
-            /*box-shadow: 0px 0px 10px gray;*/
-            margin: 0;
-            width: 100%;
-            height: auto;
-            /*transition: 0.3s;*/
-            /*outline: rgba(25, 25, 255, 0.0) solid 3px;*/
-            /*outline-offset: -8px;*/
+            }
         }
 
-        /*img:hover{*/
-        /*outline: rgba(25, 25, 255, 1) solid 3px;*/
-        /*outline-offset: -8px;*/
-        /*transition: 0.1s;*/
 
-        /*}*/
+
+
+
+
+
+
         .masonry { /* Masonry container */
             left: 0;
             margin: 0;
@@ -165,25 +128,21 @@ $result = mysqli_query($db, "SELECT * FROM images");
 
         /* Modal Content (Image) */
         .modal-content {
-            max-height: 600px;
             grid-column: 1/3;
             align-self: center;
             justify-self: center;
-            padding-top: -20px;
             margin: auto;
             display: block;
-            width: auto;
+            width: 80%;
             max-width: 700px;
-            /*max-height: 1400px;*/
-            background-color: rgba(230,221,188,0.7);
-            border-radius: 5px;
-            box-shadow: rgba(230,221,188,0.7) 0 0 100px;
+            max-height: 1400px;
+            box-shadow: rgba(230,221,188,0.9) 0 0 100px;
         }
 
         /* Caption of Modal Image (Image Text) - Same Width as the Image */
         #caption {
             background-color: #E6DDBC;
-            grid-column: 1/3;
+            /*grid-column: 1/1;*/
             align-self: center;
             justify-self: center;
             margin: 10px;
@@ -195,11 +154,24 @@ $result = mysqli_query($db, "SELECT * FROM images");
             color: #822626;
             padding: 10px;
             height: 150px;
-            position: absolute;
-            top: 20px;
             box-shadow: rgba(230,221,188,0.3) 0 0 100px;
         }
-
+        #username {
+            background-color: #E6DDBC;
+            /*grid-column: 1/1;*/
+            align-self: center;
+            justify-self: center;
+            margin: 10px;
+            float: left;
+            display: block;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            color: #822626;
+            padding: 10px;
+            height: 150px;
+            box-shadow: rgba(230,221,188,0.3) 0 0 100px;
+        }
 
         /* Add Animation - Zoom in the Modal */
         .modal-content{
@@ -237,38 +209,6 @@ $result = mysqli_query($db, "SELECT * FROM images");
 
         }
 
-        @media screen and (max-width: 900px) {
-            #main_upload{
-                width: 95%;
-                left: 2.5%;
-                top: 126px;
-            }
-            h1{
-                font-size: 32px;
-            }
-        }
-        @media screen and (max-width: 600px) {
-            #main_upload{
-                width: 100%;
-                left: 0;
-                top: 51px;
-            }
-            h1{
-                opacity: 0;
-            }
-            .masonry{
-                column-count: 2;
-            }
-
-            .modal-content {
-                width: 100%;
-            }
-            img {
-                width: 100%;
-                max-height: 80%;
-            }
-        }
-
         @keyframes zoom {
             0%   {opacity: 0.0; transform: scale(0) rotate(2deg);}
             20%  {opacity: 0.5;transform: scale(0.5) rotate(9deg);}
@@ -290,6 +230,11 @@ $result = mysqli_query($db, "SELECT * FROM images");
             100% {opacity: 1.0; transform: translate(0px) rotate(0deg);}
         }
 
+        a{
+            text-decoration: none;
+            color: black;
+        }
+
         /* The Close Button */
         .close {
             position: absolute;
@@ -301,7 +246,6 @@ $result = mysqli_query($db, "SELECT * FROM images");
             transition: 0.3s;
             transition-delay: 0.3s ;
         }
-
         modal-content img{
             float: initial;
         }
@@ -314,13 +258,32 @@ $result = mysqli_query($db, "SELECT * FROM images");
 
         .close:hover,
         .close:focus {
-            transform: rotate(90deg) scale(2,2) translateX(2px) translateY(-2px);
-            color: #bb000b;
+            transform: rotate(90deg) scale(2,2);
+            color: #bbb;
             text-decoration: none;
             cursor: pointer;
-
         }
 
+        /* 100% Image Width on Smaller Screens */
+        @media only screen and (max-width: 700px){
+            .modal-content {
+                width: 100%;
+            }
+        }
+
+        ul li{
+            position: relative;
+            left: -30px;
+            margin: 0;
+            padding: 10px;
+            width: 100%;
+            background-color: #b6ad93;
+        }
+        ul li:hover{
+            background-color: #E6DDBC;
+            box-shadow:inset 0px 0px 10px 5px #b6ad93;
+
+        }
 
 
     </style>
@@ -330,7 +293,7 @@ $result = mysqli_query($db, "SELECT * FROM images");
 <div class="topnav" id="myTopnav">
 
     <a href="home.php" >Home</a>
-    <a href="test.php">Friends</a>
+    <a href="friends.php">Friends</a>
     <a href="upload.php">Upload</a>
     <a href="../includes/logout.inc.php">Logout</a>
     <a href="profile.php" class="fag" style="color:white;float: right;"><?php echo $username;?></a>
@@ -338,55 +301,25 @@ $result = mysqli_query($db, "SELECT * FROM images");
     <script src="script.js" charset="utf-8"></script>
 </div>
 
-</div>
+
+<div id="main_upload" style="display: grid;grid-template-columns: 1fr">
+
+    <div style="min-width: 200px; margin: 0 auto">
+
+        <form action="userprofile.php" method="get">
+            Zoek hier uw vrienden: <input type="text" onkeydown="showHint(this.value)" onkeyup="showHint(this.value)">
+        <p><ul style="list-style-type: none;"><span id="txtHint"></span></ul></p>
+
+            </div>
+
+<!---->
+<!--    <input type="text" name="profile">-->
+<!--    <input type="submit">-->
+    </form>
+
+    </div>
 
 
-<div class="h1">
-    <h1>Welcome to the wall, <a class="username"><?php echo $_SESSION['u_first'];?></a></h1>
-</div>
-
-
-<div id="main_upload">
-<div class="masonry">
-    <?php
-
-    while ($row = mysqli_fetch_array($result)) {
-        echo "<div id='img_div'>";
-        echo "<img id='myImg' alt='". "<h3>" .$row['by_who'] . "</h3> Title: <h3> ".$row['image_text']. "</h3>" ."' onclick='myFunc(this)' src='images/".$row['image']."' >";
-        echo "<p>".$row['image_text']."</p>";
-        echo "</div>";
-
-        echo '<div id="myModal" class="modal">
-                <span class="close"  onclick="modal.style.display = \'none\'" >&times;</span>
-                <img class="modal-content" id="img" style="margin-bottom: 0;margin-top: 0px" images/'.$row['image'].'">
-                <div id="caption"></div>
-                </div>';
-        echo '
-        <script>
-            var modal = document.getElementById("myModal");
-
-            var modalImg = document.getElementById("img");
-            var captionText = document.getElementById("caption");
-            
-            function myFunc(el) {
-              var imgSrc = el.src;
-              var altText = el.alt;
-              modal.style.display = "grid";
-                modalImg.src = imgSrc;
-                captionText.innerHTML = "Door:" + altText;
-            }
-            
-             modal.onclick = function() { 
-                modal.style.display = "none";
-             }
-        
-        </script>
-        ';
-
-    }
-    ?>
-
-</div>
 
 
 
